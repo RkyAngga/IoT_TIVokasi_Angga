@@ -1,0 +1,18 @@
+{
+    "version": 1,
+    "author": "Rizky Angga Saputra",
+    "editor": "wokwi",
+    "parts": [
+      { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 38.4, "left": -657.56, "attrs": {} },
+      { "type": "wokwi-hc-sr04", "id": "ultrasonic1", "top": -142.5, "left": -695.3, "attrs": {} }
+    ],
+    "connections": [
+      [ "esp:TX", "$serialMonitor:RX", "", [] ],
+      [ "esp:RX", "$serialMonitor:TX", "", [] ],
+      [ "ultrasonic1:VCC", "esp:5V", "red", [ "h-76.8", "v288", "h47.85" ] ],
+      [ "ultrasonic1:GND", "esp:GND.2", "black", [ "h66", "v115.2" ] ],
+      [ "ultrasonic1:ECHO", "esp:18", "green", [ "v28.8", "h95.2", "v163.2" ] ],
+      [ "ultrasonic1:TRIG", "esp:5", "green", [ "v67.2", "h134", "v134.4" ] ]
+    ],
+    "dependencies": {}
+  }
