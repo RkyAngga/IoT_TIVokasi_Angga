@@ -1,9 +1,11 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <HTTPClient.h>
-
-
 #include "DHT.h"
+
+
+
+
 
 
 
@@ -12,22 +14,20 @@
 #define DHTTYPE DHT22  
 
 
-
-
 DHT dht(DHTPIN, DHTTYPE);
 
 
 
 
-
-
 // Ganti dengan kredensial WiFi Anda
-const char* ssid = "Wokwi-GUEST";
-const char* password = "";
+const char* ssid = "kos pak iwan";
+const char* password = "berkahselalu";
 
 
 unsigned long previousMillis = 0;
 const long interval = 5000;  // Interval 5 detik (5000 ms)
+
+
 
 
 void setup() {
@@ -47,8 +47,6 @@ void setup() {
 
 
 
-
-
   dht.begin();
  
   // Tunggu sebentar agar koneksi stabil
@@ -56,13 +54,23 @@ void setup() {
 }
 
 
+
+
 void loop() {
   unsigned long currentMillis = millis();
+
+
 
 
   // Lakukan POST setiap interval yang telah ditentukan
   if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
+
+
+
+
+
+
 
 
 
@@ -82,15 +90,23 @@ void loop() {
  
 
 
+
+
     // Compute heat index in Celsius (isFahreheit = false)
     float hic = dht.computeHeatIndex(t, h, false);
 
 
 
 
+
+
+
+
     // Inisialisasi HTTPClient
     HTTPClient http;
-    String url = "http://1b9c-2405-8740-6315-3520-f0d3-b4a3-2ee3-424d.ngrok-free.app/api/posts"; // Ganti dengan URL ngrok yang benar
+    String url = "http://d52a-118-99-125-13.ngrok-free.app/api/posts"; // Ganti dengan URL ngrok yang benar
+
+
 
 
     http.begin(url);  // Menggunakan HTTP, bukan HTTPS
@@ -99,10 +115,18 @@ void loop() {
 
 
 
+
+
+
+
 String payload = "{\"nama_sensor\":\"Sensor GD\", \"nilai1\":" + String(h) + ", \"nilai2\":" + String(t) + "}";
 
 
+
+
 Serial.println(payload);  // Untuk melihat apakah payload sudah terbentuk dengan benar
+
+
 
 
     // Kirim POST request
@@ -113,6 +137,8 @@ Serial.println(payload);  // Untuk melihat apakah payload sudah terbentuk dengan
     Serial.println(httpResponseCode);
 
 
+
+
     // Tampilkan respons dari server jika request berhasil
     if (httpResponseCode == 200 || httpResponseCode == 201) {
       String response = http.getString();
@@ -121,6 +147,8 @@ Serial.println(payload);  // Untuk melihat apakah payload sudah terbentuk dengan
     } else {
       Serial.println("Gagal mengirim data");
     }
+
+
 
 
     // Tutup koneksi HTTP
